@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Serendib Software Solutions — Software development from Sri Lanka</title>
+  <meta name="description" content="Serendib Software Solutions is a full-service software development company in Sri Lanka, building web and mobile apps, enterprise software, AI and data solutions, and cloud platforms.">
+  <meta name="theme-color" content="#0A1330">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Serendib Software Solutions — Serendipity, by design.">
+  <meta property="og:description" content="A full-service software partner from Sri Lanka: web & mobile, enterprise software, AI & data, cloud & DevOps.">
+  <meta property="og:image" content="assets/logo.png">
+
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
+  <link rel="stylesheet" href="css/styles.css">
+
+  <script>document.documentElement.classList.add('js');</script>
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+  <!-- Icon sprite: referenced below with <use href="#i-…"> -->
+  <svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 2.5c.8 5.3 3.2 7.7 9.5 9.5-6.3 1.8-8.7 4.2-9.5 9.5-.8-5.3-3.2-7.7-9.5-9.5 6.3-1.8 8.7-4.2 9.5-9.5z"/></symbol>
+    <symbol id="i-code" viewBox="0 0 24 24"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/></symbol>
+    <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4M5 4.5h12.5l-2.5 4.25 2.5 4.25H5"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7.5 3v5.5c0 4.6-3.1 8-7.5 9.5-4.4-1.5-7.5-4.9-7.5-9.5V6L12 3z"/><path d="M9 12l2.2 2.2L15.5 10"/></symbol>
+    <symbol id="i-devices" viewBox="0 0 24 24"><rect x="2" y="4" width="14" height="10" rx="1.5"/><path d="M6 18h6M9 14v4"/><rect x="16.5" y="8" width="5.5" height="12" rx="1.2"/><path d="M18.75 17.5h1"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 2.5l9 4.75L12 12 3 7.25 12 2.5z"/><path d="M3 12l9 4.75L21 12"/><path d="M3 16.75l9 4.75 9-4.75"/></symbol>
+    <symbol id="i-ai" viewBox="0 0 24 24"><path d="M11 4.5c.7 4.6 2.9 6.8 7.5 7.5-4.6.7-6.8 2.9-7.5 7.5-.7-4.6-2.9-6.8-7.5-7.5 4.6-.7 6.8-2.9 7.5-7.5z"/><path d="M19 2.5v4M17 4.5h4"/></symbol>
+    <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7.5 19h9.25a4.25 4.25 0 0 0 .5-8.47 6 6 0 0 0-11.6 1.47A3.5 3.5 0 0 0 7.5 19z"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 6.5l8.5 6 8.5-6"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M11 18.5h2"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  </svg>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- ============================== Header ============================== -->
+  <header class="site-header" data-header>
+    <div class="container nav">
+      <a class="brand" href="#top">
+        <span class="brand-mark"><img src="assets/logo.png" alt="" data-logo></span>
+        <span class="brand-text">
+          <span class="brand-name">Serendib</span>
+          <span class="brand-tagline">Software Solutions</span>
+        </span>
+      </a>
+
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu" data-nav-toggle>
+        <span class="visually-hidden">Menu</span>
+        <span class="nav-toggle-bars" aria-hidden="true"></span>
+      </button>
+
+      <nav class="nav-menu" id="nav-menu" aria-label="Primary" data-nav-menu>
+        <ul class="nav-links" role="list">
+          <li><a href="#services">Services</a></li>
+          <li><a href="#process">Process</a></li>
+          <li><a href="#work">Work</a></li>
+        </ul>
+        <a class="btn btn-primary btn-sm" href="#contact">Start a project</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ============================== Hero ============================== -->
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="container hero-grid">
+        <div class="hero-copy" data-stagger>
+          <p class="hero-kicker" data-reveal>
+            <svg class="icon icon--fill" aria-hidden="true" focusable="false"><use href="#i-spark"/></svg>
+            <span><strong>Serendib</strong> is the old name for Sri Lanka, and the root of the word <em>serendipity</em>.</span>
+          </p>
+          <h1 id="hero-title" data-reveal>Serendipity, <span class="accent-text">by design.</span></h1>
+          <p class="hero-lead" data-reveal>
+            We’re a full-service software partner from Sri Lanka. We design, build and support web and mobile apps,
+            enterprise systems, AI and cloud platforms, so the good outcomes aren’t left to chance.
+          </p>
+          <div class="hero-actions" data-reveal>
+            <a class="btn btn-primary" href="#contact">
+              Start a project
+              <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg>
+            </a>
+            <a class="btn btn-ghost" href="#work">See our work</a>
+          </div>
+          <ul class="hero-tags" role="list" aria-label="What we do" data-reveal>
+            <li>Web &amp; mobile</li>
+            <li>Enterprise software</li>
+            <li>AI &amp; data</li>
+            <li>Cloud &amp; DevOps</li>
+          </ul>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true" data-reveal style="--delay: 160ms">
+          <canvas class="starfield" data-starfield></canvas>
+          <div class="hero-glow hero-glow--blue"></div>
+          <div class="hero-glow hero-glow--teal"></div>
+          <div class="orbit orbit--inner"></div>
+          <div class="orbit orbit--outer"><span class="orbit-dot"></span></div>
+          <div class="brand-mark hero-logo"><img src="assets/logo.png" alt="" data-logo></div>
+          <div class="hero-visual-caption">
+            <span>7.87° N · 80.77° E</span>
+            <span>Sri Lanka</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================= Differentiators ========================= -->
+    <section class="section section--after-hero" id="why" aria-labelledby="why-title">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Why Serendib</p>
+          <h2 id="why-title">Good software starts with a team that’s easy to work with.</h2>
+        </header>
+
+        <ul class="card-grid" role="list" data-stagger>
+          <li class="card" data-reveal>
+            <span class="icon-tile"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-code"/></svg></span>
+            <h3>Engineers, not account layers</h3>
+            <p>You work directly with the engineers building your product. No relay of account managers, just clear answers from the people who write the code.</p>
+          </li>
+          <li class="card" data-reveal>
+            <span class="icon-tile"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-flag"/></svg></span>
+            <h3>Fixed scope, clear milestones</h3>
+            <p>We agree on scope, timeline and cost before work begins. Every milestone ends with working software you can see and test, so progress is never a guess.</p>
+          </li>
+          <li class="card" data-reveal>
+            <span class="icon-tile"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-shield"/></svg></span>
+            <h3>Support after launch</h3>
+            <p>Launch is a milestone, not the finish line. We stay on to monitor, maintain and improve what we’ve built together.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============================= Services ============================= -->
+    <section class="section" id="services" aria-labelledby="services-title">
+      <div class="container">
+        <header class="section-head section-head--split">
+          <div>
+            <p class="eyebrow">Services</p>
+            <h2 id="services-title">Everything it takes to ship software, under one roof.</h2>
+          </div>
+          <p class="section-lead">From a first prototype to a production platform, one team covers design, engineering, data and infrastructure.</p>
+        </header>
+
+        <ul class="service-list" role="list">
+          <li class="service" data-reveal>
+            <span class="icon-tile icon-tile--lg"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-devices"/></svg></span>
+            <h3 class="service-title">Web &amp; Mobile Applications</h3>
+            <div class="service-body">
+              <p>Responsive web apps and cross-platform iOS and Android apps that are fast, accessible and easy to use. We take them from first prototype through to launch.</p>
+              <ul class="service-points" role="list">
+                <li>Web applications</li>
+                <li>iOS &amp; Android</li>
+                <li>Progressive web apps</li>
+                <li>UX &amp; UI design</li>
+              </ul>
+            </div>
+          </li>
+          <li class="service" data-reveal>
+            <span class="icon-tile icon-tile--lg"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-layers"/></svg></span>
+            <h3 class="service-title">Enterprise &amp; Custom Software</h3>
+            <div class="service-body">
+              <p>Internal platforms, ERP and workflow systems, and integrations built around how your organisation actually works, not the other way round.</p>
+              <ul class="service-points" role="list">
+                <li>Business systems &amp; ERP</li>
+                <li>APIs &amp; integrations</li>
+                <li>Legacy modernisation</li>
+              </ul>
+            </div>
+          </li>
+          <li class="service" data-reveal>
+            <span class="icon-tile icon-tile--lg"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-ai"/></svg></span>
+            <h3 class="service-title">AI &amp; Data Solutions</h3>
+            <div class="service-body">
+              <p>Data pipelines, analytics and practical AI features such as search, document processing, forecasting and assistants. Everything runs on your own data, with privacy in mind.</p>
+              <ul class="service-points" role="list">
+                <li>Data engineering</li>
+                <li>Analytics &amp; dashboards</li>
+                <li>LLM &amp; ML applications</li>
+              </ul>
+            </div>
+          </li>
+          <li class="service" data-reveal>
+            <span class="icon-tile icon-tile--lg"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-cloud"/></svg></span>
+            <h3 class="service-title">Cloud &amp; DevOps</h3>
+            <div class="service-body">
+              <p>Cloud architecture, CI/CD and infrastructure as code that make releases routine, systems observable and costs predictable.</p>
+              <ul class="service-points" role="list">
+                <li>Cloud architecture</li>
+                <li>CI/CD pipelines</li>
+                <li>Containers &amp; Kubernetes</li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============================= Process ============================= -->
+    <section class="section section--band" id="process" aria-labelledby="process-title">
+      <div class="container">
+        <header class="section-head section-head--split">
+          <div>
+            <p class="eyebrow">Process</p>
+            <h2 id="process-title">Five steps. No surprises.</h2>
+          </div>
+          <p class="section-lead">Every engagement follows the same clear path, with a checkpoint at each stage, so you always know what’s done, what’s next and what it costs.</p>
+        </header>
+
+        <ol class="process" role="list" data-stagger>
+          <li class="step" data-reveal>
+            <span class="step-num" aria-hidden="true">01</span>
+            <h3>Discover</h3>
+            <p>We dig into your goals, users and constraints, then come back with a clear scope, timeline and fixed quote.</p>
+          </li>
+          <li class="step" data-reveal>
+            <span class="step-num" aria-hidden="true">02</span>
+            <h3>Design</h3>
+            <p>Architecture, user flows and interface design, tested with clickable prototypes before any production code.</p>
+          </li>
+          <li class="step" data-reveal>
+            <span class="step-num" aria-hidden="true">03</span>
+            <h3>Develop</h3>
+            <p>Short sprints that each end in a demo, on a staging environment you can try at any time.</p>
+          </li>
+          <li class="step" data-reveal>
+            <span class="step-num" aria-hidden="true">04</span>
+            <h3>Deploy</h3>
+            <p>Automated tests, security checks and a planned go-live, with monitoring in place from day one.</p>
+          </li>
+          <li class="step" data-reveal>
+            <span class="step-num" aria-hidden="true">05</span>
+            <h3>Support</h3>
+            <p>Maintenance, performance tuning and new features as your users and business grow.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============================ Tech stack ============================ -->
+    <section class="section" id="stack" aria-labelledby="stack-title">
+      <div class="container">
+        <header class="section-head section-head--split">
+          <div>
+            <p class="eyebrow">Tech stack</p>
+            <h2 id="stack-title">Proven tools, chosen for the job.</h2>
+          </div>
+          <p class="section-lead">We choose mature, well-supported technology that fits your product and your team, so what we build is easy to extend, maintain and hire for.</p>
+        </header>
+
+        <div class="stack-grid" data-stagger>
+          <div class="stack-group" data-reveal>
+            <h3 class="stack-title"><span class="stack-dot" style="--dot: var(--color-blue)"></span>Frontend</h3>
+            <ul class="chips" role="list">
+              <li class="chip">React</li>
+              <li class="chip">Next.js</li>
+              <li class="chip">TypeScript</li>
+              <li class="chip">Flutter</li>
+            </ul>
+          </div>
+          <div class="stack-group" data-reveal>
+            <h3 class="stack-title"><span class="stack-dot" style="--dot: var(--color-teal)"></span>Backend</h3>
+            <ul class="chips" role="list">
+              <li class="chip">Node.js</li>
+              <li class="chip">Python</li>
+              <li class="chip">Java</li>
+              <li class="chip">Go</li>
+            </ul>
+          </div>
+          <div class="stack-group" data-reveal>
+            <h3 class="stack-title"><span class="stack-dot" style="--dot: var(--color-ice)"></span>Cloud &amp; DevOps</h3>
+            <ul class="chips" role="list">
+              <li class="chip">AWS</li>
+              <li class="chip">Docker</li>
+              <li class="chip">Kubernetes</li>
+              <li class="chip">GitHub Actions</li>
+            </ul>
+          </div>
+          <div class="stack-group" data-reveal>
+            <h3 class="stack-title"><span class="stack-dot" style="--dot: var(--color-blue)"></span>Data &amp; AI</h3>
+            <ul class="chips" role="list">
+              <li class="chip">PostgreSQL</li>
+              <li class="chip">PyTorch</li>
+              <li class="chip">LangChain</li>
+              <li class="chip">Elasticsearch</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== Selected work ========================== -->
+    <section class="section" id="work" aria-labelledby="work-title">
+      <div class="container">
+        <header class="section-head section-head--split">
+          <div>
+            <p class="eyebrow">Selected work</p>
+            <h2 id="work-title">Recent projects.</h2>
+          </div>
+          <p class="section-lead">A few recent engagements: the problem, what we built and the difference it made.</p>
+        </header>
+
+        <!-- To add a project image, replace the .work-media div with:
+             <img class="work-media" src="assets/work/your-image.jpg" alt="Describe the screenshot"> -->
+        <ul class="work-grid" role="list" data-stagger>
+          <li data-reveal>
+            <article class="work-card">
+              <div class="work-media" aria-hidden="true"><span class="work-index">01</span></div>
+              <div class="work-body">
+                <p class="work-industry">[Industry]</p>
+                <h3 class="work-title">[Project name]</h3>
+                <p class="work-desc">[Description]</p>
+                <dl class="work-meta">
+                  <div>
+                    <dt>Tech</dt>
+                    <dd><ul class="chips chips--sm" role="list"><li class="chip">[Tech]</li><li class="chip">[Tech]</li><li class="chip">[Tech]</li></ul></dd>
+                  </div>
+                  <div class="work-result">
+                    <dt>Result</dt>
+                    <dd>[Result]</dd>
+                  </div>
+                </dl>
+              </div>
+            </article>
+          </li>
+          <li data-reveal>
+            <article class="work-card">
+              <div class="work-media" aria-hidden="true"><span class="work-index">02</span></div>
+              <div class="work-body">
+                <p class="work-industry">[Industry]</p>
+                <h3 class="work-title">[Project name]</h3>
+                <p class="work-desc">[Description]</p>
+                <dl class="work-meta">
+                  <div>
+                    <dt>Tech</dt>
+                    <dd><ul class="chips chips--sm" role="list"><li class="chip">[Tech]</li><li class="chip">[Tech]</li><li class="chip">[Tech]</li></ul></dd>
+                  </div>
+                  <div class="work-result">
+                    <dt>Result</dt>
+                    <dd>[Result]</dd>
+                  </div>
+                </dl>
+              </div>
+            </article>
+          </li>
+          <li data-reveal>
+            <article class="work-card">
+              <div class="work-media" aria-hidden="true"><span class="work-index">03</span></div>
+              <div class="work-body">
+                <p class="work-industry">[Industry]</p>
+                <h3 class="work-title">[Project name]</h3>
+                <p class="work-desc">[Description]</p>
+                <dl class="work-meta">
+                  <div>
+                    <dt>Tech</dt>
+                    <dd><ul class="chips chips--sm" role="list"><li class="chip">[Tech]</li><li class="chip">[Tech]</li><li class="chip">[Tech]</li></ul></dd>
+                  </div>
+                  <div class="work-result">
+                    <dt>Result</dt>
+                    <dd>[Result]</dd>
+                  </div>
+                </dl>
+              </div>
+            </article>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============================= Contact ============================= -->
+    <section class="section" id="contact" aria-labelledby="contact-title">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Contact</p>
+          <h2 id="contact-title">Tell us what you’re building.</h2>
+          <p class="section-lead">Share a little about your project, like your goals, timeline or where you’re stuck, and we’ll get back to you with questions, ideas and next steps.</p>
+        </header>
+
+        <div class="contact-grid">
+          <form class="contact-form" id="contact-form" action="#" method="post" data-contact-form data-reveal>
+            <div class="field-row">
+              <div class="field">
+                <label for="name">Name</label>
+                <input id="name" name="name" type="text" autocomplete="name" placeholder="Your name" required aria-describedby="name-error">
+                <p class="field-error" id="name-error"></p>
+              </div>
+              <div class="field">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@company.com" required aria-describedby="email-error">
+                <p class="field-error" id="email-error"></p>
+              </div>
+            </div>
+            <div class="field">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="6" placeholder="What are you building, and when do you need it?" required aria-describedby="message-error"></textarea>
+              <p class="field-error" id="message-error"></p>
+            </div>
+            <div class="form-footer">
+              <button class="btn btn-primary" type="submit">
+                Send message
+                <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg>
+              </button>
+              <p class="form-note">No sales pitch, just a conversation with an engineer.</p>
+            </div>
+            <p class="form-status" role="status" data-form-status></p>
+          </form>
+
+          <aside class="contact-panel" aria-labelledby="contact-details-title" data-reveal style="--delay: 100ms">
+            <h3 id="contact-details-title">Contact details</h3>
+            <p>Prefer to reach out directly? We’re happy to talk through ideas, even early ones.</p>
+            <!-- TODO: replace the bracketed placeholders and the mailto:/tel: links -->
+            <ul class="contact-list" role="list">
+              <li>
+                <span class="icon-tile"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-mail"/></svg></span>
+                <div>
+                  <span class="contact-label">Email</span>
+                  <a class="contact-value" href="mailto:hello@example.com">[hello@yourdomain.com]</a>
+                </div>
+              </li>
+              <li>
+                <span class="icon-tile"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone"/></svg></span>
+                <div>
+                  <span class="contact-label">Phone</span>
+                  <a class="contact-value" href="tel:+94000000000">[+94 XX XXX XXXX]</a>
+                </div>
+              </li>
+              <li>
+                <span class="icon-tile"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-pin"/></svg></span>
+                <div>
+                  <span class="contact-label">Location</span>
+                  <span class="contact-value">[City], Sri Lanka</span>
+                </div>
+              </li>
+              <li>
+                <span class="icon-tile"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clock"/></svg></span>
+                <div>
+                  <span class="contact-label">Hours</span>
+                  <span class="contact-value">[Mon–Fri, 9:00–18:00]</span>
+                  <span class="contact-sub">Sri Lanka time (UTC+5:30)</span>
+                </div>
+              </li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================== Footer ============================== -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <a class="brand brand--sm" href="#top">
+        <span class="brand-mark"><img src="assets/logo.png" alt="" data-logo></span>
+        <span class="brand-name">Serendib Software Solutions</span>
+      </a>
+      <nav aria-label="Footer">
+        <ul class="footer-links" role="list">
+          <li><a href="#services">Services</a></li>
+          <li><a href="#process">Process</a></li>
+          <li><a href="#work">Work</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <p class="footer-copy">© <span data-year>2026</span> Serendib Software Solutions. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>
