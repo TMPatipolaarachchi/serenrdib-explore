@@ -452,6 +452,12 @@ section[id] { scroll-margin-top: var(--header-h); }
   object-fit: contain;
 }
 
+/* Thin ring so the dark mark separates from the dark header */
+.brand .brand-mark {
+  border-radius: 24%;
+  box-shadow: 0 0 0 1px var(--color-border-strong);
+}
+
 /* Shown by main.js until assets/logo.png exists */
 .logo-fallback {
   display: grid;
@@ -841,11 +847,11 @@ section[id] { scroll-margin-top: var(--header-h); }
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 40%;
+  width: 46%;
   height: auto;
   aspect-ratio: 1;
   transform: translate(-50%, -50%);
-  filter: drop-shadow(0 0 36px rgba(76, 126, 240, 0.45));
+  filter: drop-shadow(0 24px 48px rgba(4, 10, 30, 0.6)) drop-shadow(0 0 40px rgba(76, 126, 240, 0.35));
 }
 
 .hero-visual-caption {
@@ -1384,31 +1390,37 @@ a.contact-value:hover { text-decoration-color: var(--color-ice); }
 /* Footer ------------------------------------------------------------------- */
 
 .site-footer {
-  padding-block: 36px;
+  padding-block: clamp(56px, 7vw, 88px) 32px;
   border-top: 1px solid var(--color-border);
+  background: var(--color-bg-deep);
 }
 
-.footer-inner {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px 32px;
+.footer-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) repeat(2, minmax(0, 1fr));
+  gap: 40px 64px;
 }
 
-.brand--sm { gap: 10px; }
-.brand--sm .brand-mark { width: 28px; height: 28px; }
+.footer-brand p {
+  max-width: 42ch;
+  margin: 20px 0 28px;
+  color: var(--color-muted);
+  font-size: 0.9375rem;
+}
 
-.brand--sm .brand-name {
-  font-size: var(--text-base);
+.footer-title {
+  margin-bottom: 18px;
+  color: var(--color-text);
+  font-size: var(--text-sm);
   font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
 .footer-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 24px;
-  font-size: var(--text-sm);
+  display: grid;
+  gap: 12px;
+  font-size: 0.9375rem;
 }
 
 .footer-links a {
@@ -1418,16 +1430,21 @@ a.contact-value:hover { text-decoration-color: var(--color-ice); }
 
 .footer-links a:hover { color: var(--color-text); }
 
-.footer-copy {
+.footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 32px;
+  margin-top: clamp(48px, 6vw, 72px);
+  padding-top: 24px;
+  border-top: 1px solid var(--color-border);
   color: var(--color-muted);
   font-size: var(--text-sm);
 }
 
 @media (max-width: 900px) {
-  .footer-inner {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+  .footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .footer-brand { grid-column: 1 / -1; }
 }
 
 

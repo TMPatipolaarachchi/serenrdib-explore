@@ -9,9 +9,10 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="Serendib Software Solutions — Serendipity, by design.">
   <meta property="og:description" content="A full-service software partner from Sri Lanka: web & mobile, enterprise software, AI & data, cloud & DevOps.">
-  <meta property="og:image" content="assets/logo.png">
+  <meta property="og:image" content="assets/og-image.jpg">
 
-  <link rel="icon" type="image/png" href="assets/logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
@@ -44,7 +45,7 @@
   <header class="site-header" data-header>
     <div class="container nav">
       <a class="brand" href="#top">
-        <span class="brand-mark"><img src="assets/logo.png" alt="" data-logo></span>
+        <span class="brand-mark"><img src="assets/logo-mark.png" alt="" width="128" height="128" data-logo></span>
         <span class="brand-text">
           <span class="brand-name">Serendib</span>
           <span class="brand-tagline">Software Solutions</span>
@@ -102,7 +103,7 @@
           <div class="hero-glow hero-glow--teal"></div>
           <div class="orbit orbit--inner"></div>
           <div class="orbit orbit--outer"><span class="orbit-dot"></span></div>
-          <div class="brand-mark hero-logo"><img src="assets/logo.png" alt="" data-logo></div>
+          <div class="brand-mark hero-logo"><img src="assets/logo-icon.png" alt="" width="480" height="480" data-logo></div>
           <div class="hero-visual-caption">
             <span>7.87° N · 80.77° E</span>
             <span>Sri Lanka</span>
@@ -456,20 +457,49 @@
 
   <!-- ============================== Footer ============================== -->
   <footer class="site-footer">
-    <div class="container footer-inner">
-      <a class="brand brand--sm" href="#top">
-        <span class="brand-mark"><img src="assets/logo.png" alt="" data-logo></span>
-        <span class="brand-name">Serendib Software Solutions</span>
-      </a>
-      <nav aria-label="Footer">
-        <ul class="footer-links" role="list">
-          <li><a href="#services">Services</a></li>
-          <li><a href="#process">Process</a></li>
-          <li><a href="#work">Work</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </nav>
-      <p class="footer-copy">© <span data-year>2026</span> Serendib Software Solutions. All rights reserved.</p>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="brand" href="#top">
+            <span class="brand-mark"><img src="assets/logo-mark.png" alt="" width="128" height="128" data-logo></span>
+            <span class="brand-text">
+              <span class="brand-name">Serendib</span>
+              <span class="brand-tagline">Software Solutions</span>
+            </span>
+          </a>
+          <p>A full-service software partner from Sri Lanka. We design, build and support web and mobile apps, enterprise systems, AI and cloud platforms.</p>
+          <a class="btn btn-ghost btn-sm" href="#contact">
+            Start a project
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg>
+          </a>
+        </div>
+
+        <nav class="footer-col" aria-labelledby="footer-services">
+          <h2 class="footer-title" id="footer-services">Services</h2>
+          <ul class="footer-links" role="list">
+            <li><a href="#services">Web &amp; mobile apps</a></li>
+            <li><a href="#services">Enterprise software</a></li>
+            <li><a href="#services">AI &amp; data</a></li>
+            <li><a href="#services">Cloud &amp; DevOps</a></li>
+          </ul>
+        </nav>
+
+        <nav class="footer-col" aria-labelledby="footer-company">
+          <h2 class="footer-title" id="footer-company">Company</h2>
+          <ul class="footer-links" role="list">
+            <li><a href="#why">Why Serendib</a></li>
+            <li><a href="#process">Process</a></li>
+            <li><a href="#stack">Tech stack</a></li>
+            <li><a href="#work">Work</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© <span data-year>2026</span> Serendib Software Solutions. All rights reserved.</p>
+        <p>Designed and built in Sri Lanka.</p>
+      </div>
     </div>
   </footer>
 </body>
