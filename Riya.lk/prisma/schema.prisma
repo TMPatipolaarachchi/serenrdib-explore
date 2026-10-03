@@ -1,0 +1,429 @@
+// =============================================================================
+// Riya.lk — database schema
+// -----------------------------------------------------------------------------
+// PostgreSQL + Prisma 7. The connection URL lives in `prisma.config.ts`
+// (Prisma 7 no longer reads it from this file).
+//
+// Main areas:
+//   • Users & auth ........ User, OtpCode
+//   • Catalogue ........... Category (tree), Brand, VehicleModel
+//   • Listings ............ Ad, AdImage, Favourite, Report
+//   • Messaging ........... Conversation, Message
+//   • Admin ............... Admin, AdminLoginAttempt, SiteSettings, Banner
+// =============================================================================
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// -----------------------------------------------------------------------------
+// Enums
+// -----------------------------------------------------------------------------
+
+enum UserStatus {
+  ACTIVE
+  SUSPENDED // temporarily blocked until `suspendedUntil`
+  BANNED // permanently blocked
+}
+
+enum AdStatus {
+  PENDING // waiting for admin approval
+  ACTIVE // live on the site
+  REJECTED // rejected by an admin (see `rejectionReason`)
+  SOLD // marked as sold by the owner
+  EXPIRED // reserved for future auto-expiry
+}
+
+enum AdCondition {
+  NEW
+  USED
+  RECONDITIONED
+}
+
+enum FuelType {
+  PETROL
+  DIESEL
+  HYBRID
+  ELECTRIC
+  CNG
+  OTHER
+}
+
+enum Transmission {
+  MANUAL
+  AUTOMATIC
+  TIPTRONIC
+  OTHER
+}
+
+/// Decides which fields the "Post ad" form shows for a category.
+enum CategoryType {
+  VEHICLE
+  PART
+  ACCESSORY
+  SERVICE
+}
+
+enum ReportReason {
+  SPAM
+  FRAUD
+  DUPLICATE
+  WRONG_CATEGORY
+  ALREADY_SOLD
+  OFFENSIVE
+  OTHER
+}
+
+enum ReportStatus {
+  OPEN
+  RESOLVED
+  DISMISSED
+}
+
+// -----------------------------------------------------------------------------
+// Users
+// -----------------------------------------------------------------------------
+
+model User {
+  id              String     @id @default(cuid())
+  name            String
+  email           String     @unique
+  emailVerified   DateTime?
+  /// bcrypt hash. Null for accounts created through Google sign-in.
+  passwordHash    String?
+  image           String?
+  googleId        String?    @unique
+  /// Normalised Sri Lankan mobile number, e.g. "+94771234567".
+  phone           String?
+  phoneVerifiedAt DateTime?
+  district        String?
+  city            String?
+  status          UserStatus @default(ACTIVE)
+  suspendedUntil  DateTime?
+  statusReason    String?
+  lastLoginAt     DateTime?
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+
+  ads                 Ad[]
+  favourites          Favourite[]
+  buyerConversations  Conversation[] @relation("BuyerConversations")
+  sellerConversations Conversation[] @relation("SellerConversations")
+  messages            Message[]
+  reports             Report[]
+  otpCodes            OtpCode[]
+
+  @@index([status])
+  @@index([createdAt])
+  @@index([phone])
+}
+
+/// One-time passwords for phone verification. Only a hash of the code is stored.
+model OtpCode {
+  id         String    @id @default(cuid())
+  userId     String
+  phone      String
+  codeHash   String
+  attempts   Int       @default(0)
+  expiresAt  DateTime
+  consumedAt DateTime?
+  createdAt  DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+}
+
+// -----------------------------------------------------------------------------
+// Catalogue: categories, brands and models (managed from the admin panel)
+// -----------------------------------------------------------------------------
+
+model Category {
+  id        String       @id @default(cuid())
+  slug      String       @unique
+  nameEn    String
+  nameSi    String
+  nameTa    String
+  type      CategoryType @default(VEHICLE)
+  /// Icon key understood by the UI (see src/components/category-icon.tsx).
+  icon      String       @default("car")
+  sortOrder Int          @default(0)
+  isActive  Boolean      @default(true)
+  parentId  String?
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  parent   Category?      @relation("CategoryTree", fields: [parentId], references: [id], onDelete: SetNull)
+  children Category[]     @relation("CategoryTree")
+  brands   Brand[]
+  models   VehicleModel[]
+  ads      Ad[]
+
+  @@index([parentId])
+  @@index([isActive, sortOrder])
+}
+
+model Brand {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  name      String
+  sortOrder Int      @default(0)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  /// Vehicle categories this brand appears in (e.g. Honda → Cars, Motorbikes).
+  categories Category[]
+  models     VehicleModel[]
+  ads        Ad[]
+
+  @@index([isActive, name])
+}
+
+/// Named `VehicleModel` because `Model` clashes with Prisma's generated types.
+model VehicleModel {
+  id         String   @id @default(cuid())
+  slug       String
+  name       String
+  brandId    String
+  /// Optional: the vehicle category this model belongs to (Honda Fit → Cars).
+  categoryId String?
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  brand    Brand     @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  category Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  ads      Ad[]
+
+  @@unique([brandId, slug])
+  @@index([brandId, categoryId])
+}
+
+// -----------------------------------------------------------------------------
+// Listings
+// -----------------------------------------------------------------------------
+
+model Ad {
+  id          String       @id @default(cuid())
+  /// SEO-friendly URL segment, e.g. "toyota-aqua-2015-k3j9x2".
+  slug        String       @unique
+  title       String
+  description String
+  /// Price in whole Sri Lankan rupees. Null means "price on request" (services).
+  price       Int?
+  negotiable  Boolean      @default(false)
+  condition   AdCondition?
+
+  categoryId String
+  /// For vehicles: the vehicle's brand/model.
+  /// For parts & accessories: the *compatible* vehicle brand/model.
+  brandId    String?
+  modelId    String?
+  /// Free-text model name, used when the model is not in our list.
+  modelText  String?
+
+  year           Int?
+  /// Odometer reading in kilometres.
+  mileage        Int?
+  fuelType       FuelType?
+  transmission   Transmission?
+  /// Engine capacity in cc.
+  engineCapacity Int?
+
+  // Parts only
+  partNumber    String?
+  compatibility String?
+
+  // Location (district/city slugs from src/lib/data/locations.ts)
+  district String
+  city     String
+
+  contactName  String?
+  contactPhone String
+
+  status          AdStatus @default(PENDING)
+  rejectionReason String?
+  isFeatured      Boolean  @default(false)
+  isTopAd         Boolean  @default(false)
+  views           Int      @default(0)
+
+  userId      String
+  publishedAt DateTime?
+  soldAt      DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category      Category       @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  brand         Brand?         @relation(fields: [brandId], references: [id], onDelete: SetNull)
+  model         VehicleModel?  @relation(fields: [modelId], references: [id], onDelete: SetNull)
+  images        AdImage[]
+  favourites    Favourite[]
+  conversations Conversation[]
+  reports       Report[]
+
+  @@index([status, publishedAt])
+  @@index([categoryId, status])
+  @@index([brandId, status])
+  @@index([district, status])
+  @@index([userId, status])
+  @@index([price])
+  @@index([isFeatured, status])
+  @@index([isTopAd, status])
+}
+
+model AdImage {
+  id        String   @id @default(cuid())
+  adId      String
+  url       String
+  /// Cloudinary public id (null for local development uploads).
+  publicId  String?
+  width     Int?
+  height    Int?
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+
+  ad Ad @relation(fields: [adId], references: [id], onDelete: Cascade)
+
+  @@index([adId, sortOrder])
+}
+
+model Favourite {
+  userId    String
+  adId      String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  ad   Ad   @relation(fields: [adId], references: [id], onDelete: Cascade)
+
+  @@id([userId, adId])
+  @@index([adId])
+}
+
+model Report {
+  id         String       @id @default(cuid())
+  adId       String
+  reporterId String?
+  reason     ReportReason
+  details    String?
+  status     ReportStatus @default(OPEN)
+  adminNote  String?
+  resolvedAt DateTime?
+  createdAt  DateTime     @default(now())
+
+  ad       Ad    @relation(fields: [adId], references: [id], onDelete: Cascade)
+  reporter User? @relation(fields: [reporterId], references: [id], onDelete: SetNull)
+
+  @@unique([adId, reporterId])
+  @@index([status, createdAt])
+}
+
+// -----------------------------------------------------------------------------
+// Buyer ↔ seller chat
+// -----------------------------------------------------------------------------
+
+/// One conversation per (ad, buyer) pair.
+model Conversation {
+  id            String   @id @default(cuid())
+  adId          String
+  buyerId       String
+  sellerId      String
+  lastMessageAt DateTime @default(now())
+  createdAt     DateTime @default(now())
+
+  ad       Ad        @relation(fields: [adId], references: [id], onDelete: Cascade)
+  buyer    User      @relation("BuyerConversations", fields: [buyerId], references: [id], onDelete: Cascade)
+  seller   User      @relation("SellerConversations", fields: [sellerId], references: [id], onDelete: Cascade)
+  messages Message[]
+
+  @@unique([adId, buyerId])
+  @@index([buyerId, lastMessageAt])
+  @@index([sellerId, lastMessageAt])
+}
+
+model Message {
+  id             String    @id @default(cuid())
+  conversationId String
+  senderId       String
+  body           String
+  readAt         DateTime?
+  createdAt      DateTime  @default(now())
+
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  sender       User         @relation(fields: [senderId], references: [id], onDelete: Cascade)
+
+  @@index([conversationId, createdAt])
+}
+
+// -----------------------------------------------------------------------------
+// Admin
+// -----------------------------------------------------------------------------
+
+/// Admin accounts are completely separate from public users.
+model Admin {
+  id                 String    @id @default(cuid())
+  username           String    @unique
+  /// bcrypt hash — never store the plain password.
+  passwordHash       String
+  /// Forces a password change on the next login (true for the seeded account).
+  mustChangePassword Boolean   @default(true)
+  /// Bumped on every password change; invalidates older admin sessions.
+  passwordVersion    Int       @default(1)
+  lastLoginAt        DateTime?
+  lastLoginIp        String?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+}
+
+/// Used to rate-limit the admin login form (works across server instances).
+model AdminLoginAttempt {
+  id        String   @id @default(cuid())
+  ip        String
+  username  String
+  success   Boolean
+  createdAt DateTime @default(now())
+
+  @@index([ip, createdAt])
+  @@index([username, createdAt])
+}
+
+/// Single-row table (id = 1) holding editable site settings.
+model SiteSettings {
+  id             Int      @id @default(1)
+  siteName       String   @default("Riya.lk")
+  tagline        String?
+  logoUrl        String?
+  contactEmail   String?
+  contactPhone   String?
+  whatsappNumber String?
+  address        String?
+  facebookUrl    String?
+  instagramUrl   String?
+  youtubeUrl     String?
+  tiktokUrl      String?
+  /// When true, new and edited ads go live without admin review.
+  autoApproveAds Boolean  @default(false)
+  updatedAt      DateTime @updatedAt
+}
+
+/// Promotional banners shown on the homepage.
+model Banner {
+  id        String   @id @default(cuid())
+  title     String?
+  subtitle  String?
+  imageUrl  String
+  publicId  String?
+  linkUrl   String?
+  isActive  Boolean  @default(true)
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([isActive, sortOrder])
+}

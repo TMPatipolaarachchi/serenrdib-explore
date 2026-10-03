@@ -1,0 +1,182 @@
+@import "tailwindcss";
+
+/* Dark mode is toggled with a `.dark` class on <html> (see src/components/theme/theme.tsx). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* -----------------------------------------------------------------------------
+   Brand palette — deep blue + vibrant orange
+   -------------------------------------------------------------------------- */
+@theme {
+  --font-sans: var(--font-jakarta), var(--font-sinhala), var(--font-tamil), ui-sans-serif, system-ui, sans-serif;
+
+  --color-brand-50: #eef4ff;
+  --color-brand-100: #dae6ff;
+  --color-brand-200: #bdd3ff;
+  --color-brand-300: #90b6ff;
+  --color-brand-400: #5c8dfc;
+  --color-brand-500: #3767f6;
+  --color-brand-600: #2149e8;
+  --color-brand-700: #1a38c4;
+  --color-brand-800: #17318f;
+  --color-brand-900: #0f2468;
+  --color-brand-950: #0a1640;
+
+  --color-accent-50: #fff5ec;
+  --color-accent-100: #ffe8d3;
+  --color-accent-200: #ffcda5;
+  --color-accent-300: #ffab6d;
+  --color-accent-400: #ff8533;
+  --color-accent-500: #ff6a0c;
+  --color-accent-600: #f04f02;
+  --color-accent-700: #c73a05;
+  --color-accent-800: #9e2f0d;
+  --color-accent-900: #7f290e;
+
+  --animate-shimmer: shimmer 1.8s ease-in-out infinite;
+  /* Entrance animation. Pure CSS, so server-rendered content is visible even
+     before (or without) JavaScript — good for LCP and SEO. */
+  --animate-rise: rise-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+  @keyframes shimmer {
+    0% { background-position: -400px 0; }
+    100% { background-position: 400px 0; }
+  }
+
+  @keyframes rise-in {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: none; }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-rise {
+    animation: none;
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   Semantic colours (switch between light & dark)
+   -------------------------------------------------------------------------- */
+:root {
+  --background: #f4f6fb;
+  --foreground: #0d1729;
+  --card: #ffffff;
+  --muted: #eef1f7;
+  --muted-foreground: #5f6b80;
+  --border: #e1e6ef;
+  --ring: #3767f6;
+  color-scheme: light;
+}
+
+.dark {
+  --background: #070c19;
+  --foreground: #e6eaf3;
+  --card: #0e1628;
+  --muted: #151f35;
+  --muted-foreground: #95a1b8;
+  --border: #1f2b44;
+  --ring: #5c8dfc;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+}
+
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-color: var(--border);
+  }
+
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-feature-settings: "cv11", "ss01";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Sinhala & Tamil scripts need a little more line height to breathe. */
+  :lang(si-LK),
+  :lang(ta-LK) {
+    line-height: 1.65;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   Chart palette (admin dashboard). Categorical slots validated for colour-vision
+   deficiency and contrast against the card surface in both modes.
+   -------------------------------------------------------------------------- */
+.viz {
+  --series-1: #2a78d6;
+  --series-2: #eb6834;
+  --series-3: #1baf7a;
+  --series-4: #eda100;
+  --viz-grid: #e9ecf2;
+  --viz-axis: #cfd6e1;
+  --viz-muted: #667085;
+  --viz-surface: var(--card);
+  --delta-good: #006300;
+}
+
+.dark .viz {
+  --series-1: #3987e5;
+  --series-2: #d95926;
+  --series-3: #199e70;
+  --series-4: #c98500;
+  --viz-grid: #1b263d;
+  --viz-axis: #2b3856;
+  --viz-muted: #8b96ad;
+  --delta-good: #0ca30c;
+}
+
+/* Hide scrollbars on horizontal carousels while keeping them scrollable. */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Leaves room for the fixed bottom navigation on phones (incl. iPhone home bar). */
+@utility pb-safe-nav {
+  padding-bottom: calc(4.5rem + env(safe-area-inset-bottom));
+  @media (width >= 64rem) {
+    padding-bottom: 0;
+  }
+}
+
+/* Loading skeleton shimmer */
+@utility skeleton {
+  background-color: var(--muted);
+  background-image: linear-gradient(90deg, transparent 0, color-mix(in srgb, var(--card) 55%, transparent) 50%, transparent 100%);
+  background-size: 800px 100%;
+  background-repeat: no-repeat;
+  animation: var(--animate-shimmer);
+}
